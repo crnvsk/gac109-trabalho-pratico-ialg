@@ -12,7 +12,7 @@ Nome: MovEsc Ltda.
 email: bel@beltrano.com bSilva@eletri.com.br
 Telefone:+55 (35)38219997
 situação: ativo*/
-
+ 
 struct Fornecedor{
     string nome;
     string email[5];
@@ -29,29 +29,29 @@ struct Produto{
 };
 
 void saida(Produto produto){
-    cout << "Descrição do produto: ";
+    cout << "Descricao do produto: ";
     cout << produto.descricao << endl;
-    cout << "Código de identificação:";
+    cout << "Codigo de identificacao: ";
     cout << produto.id << endl;
-    cout << "Quantidade disponível:";
+    cout << "Quantidade disponivel: ";
     cout << produto.quantidade << endl;
-    cout << "Preço unitário: ";
+    cout << "Preco unitario: ";
     cout << produto.preco << endl;
     cout << "Fornecedor: " << endl;
-    cout << "Nome: " << endl;
+    cout << "Nome: ";
     cout << produto.fornecedor.nome << endl;
 
     cout << "E-mail(s) do Fornecedor: ";
     int i=0;
     while(i < 5){
-        cout << produto.fornecedor.email[i];
+        cout << produto.fornecedor.email[i] << endl;
         i++;
     }
 
     cout << "Telefone: ";
     cout << produto.fornecedor.telefone;
 
-    cout << "situação: ";
+    cout << "situacao: ";
     cout << produto.situacao;
 }
 
@@ -62,15 +62,16 @@ void cadastrar(){
     string str1 ("ativo");
     string str2 ("inativo");
 
-    cout << "Descrição do produto: ";
+    cout << "CADASTRO DE PRODUTO" << endl;
+    cout << "Descricao do produto: ";
     cin >> produto.descricao;
-    cout << "Código de identificação:";
+    cout << "Codigo de identificacao:";
     cin >> produto.id;
-    cout << "Quantidade disponível:";
+    cout << "Quantidade disponivel:";
     cin >> produto.quantidade;
-    cout << "Preço unitário: ";
+    cout << "Preco unitario: ";
     cin >> produto.preco;
-    cout << "Nome: ";
+    cout << "Nome do fornecedor: ";
     cin >> produto.fornecedor.nome;
 
     cout << "Quantos e-mails o Fornecedor possui?(Maximo 5): ";
@@ -86,7 +87,7 @@ void cadastrar(){
     cout << "Telefone: ";
     cin >> produto.fornecedor.telefone;
 
-    cout << "Situação (ativo ou inativo):  " << endl;
+    cout << "Situacaoo (ativo ou inativo):  " << endl;
     chave = -1;
     while(chave == -1){
         cin >> entrada;
@@ -106,12 +107,16 @@ void cadastrar(){
 
 
 int main(){
-
-    /*Fornecedor semente;
-    Produto maconha;
-
-    cin >> semente.email[0];
-    cout << semente.email[0];*/
+    
+    cout << "Escolha o que deseja fazer:" << endl;
+    cout << "(1) Cadastrar produto" << endl;
+    cout << "(2) Consultar produto" << endl;
+    cout << "(3) Listar produtos cadastrados disponiveis ordenados pelo codigo do produto" << endl;
+    cout << "(4) Excluir um produto" << endl;
+    cout << "(5) Efetuar uma venda" << endl;
+    cout << "(6) Listar dados de produtos ativos em estoque" << endl;
+    cout << "(7) Exportar dados de produtos ativos para arquivo binario" << endl;
+    cout << "(8) Sair" << endl;
 
     int key = -1;
     cin >> key;
@@ -134,7 +139,7 @@ int main(){
             //Efetuar uma venda:
             break;
         case 6:
-            //Lstar dados de produtos ativos em estoque:
+            //Listar dados de produtos ativos em estoque:
             break;
         case 7:
             //Exportar dados de produtos ativos para arquivo binário:
