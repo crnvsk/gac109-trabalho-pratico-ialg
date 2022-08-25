@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 
 using namespace std;
@@ -49,10 +50,9 @@ void saida(Produto produto){
     }
 
     cout << "Telefone: ";
-    cout << produto.fornecedor.telefone;
-
-    cout << "situacao: ";
-    cout << produto.situacao;
+    cout << produto.fornecedor.telefone << endl;
+    cout << "Situacao: ";
+    cout << produto.situacao << endl;
 }
 
 void cadastrar(){
@@ -71,7 +71,8 @@ void cadastrar(){
     cin >> produto.quantidade;
     cout << "Preco unitario: ";
     cin >> produto.preco;
-    cout << "Nome do fornecedor: ";
+
+    cout  << "Nome do fornecedor: ";
     cin >> produto.fornecedor.nome;
 
     cout << "Quantos e-mails o Fornecedor possui?(Maximo 5): ";
@@ -87,7 +88,7 @@ void cadastrar(){
     cout << "Telefone: ";
     cin >> produto.fornecedor.telefone;
 
-    cout << "Situacaoo (ativo ou inativo):  " << endl;
+    cout << "Situacao (ativo ou inativo):  " << endl;
     chave = -1;
     while(chave == -1){
         cin >> entrada;
@@ -105,9 +106,11 @@ void cadastrar(){
 
 }
 
+void gravarEmArquivo(Produto produto){
+    //to do
+}
 
-int main(){
-    
+void menu(){
     cout << "Escolha o que deseja fazer:" << endl;
     cout << "(1) Cadastrar produto" << endl;
     cout << "(2) Consultar produto" << endl;
@@ -117,38 +120,44 @@ int main(){
     cout << "(6) Listar dados de produtos ativos em estoque" << endl;
     cout << "(7) Exportar dados de produtos ativos para arquivo binario" << endl;
     cout << "(8) Sair" << endl;
+}
+
+int main(){
 
     int key = -1;
-    cin >> key;
-
-    switch(key) {
-        case 1:
-            //Cadastrar produto:
-            cadastrar();
-            break;
-        case 2:
-            //Consultar produto:
-            break;
-        case 3:
-            //Listar produtos cadastrados disponíveis ordenados pelo código do produto:
-            break;
-        case 4:
-            //Excluir um produto:
-            break;
-        case 5:
-            //Efetuar uma venda:
-            break;
-        case 6:
-            //Listar dados de produtos ativos em estoque:
-            break;
-        case 7:
-            //Exportar dados de produtos ativos para arquivo binário:
-            break;
-        case 8:
-            //Sair:
-            break;
-        default:
-            break;
+    while(key != 8){
+        menu();
+        cin >> key;
+        switch(key){
+            case 1:
+                //Cadastrar produto:
+                cadastrar();
+                break;
+            case 2:
+                //Consultar produto:
+                break;
+            case 3:
+                //Listar produtos cadastrados disponíveis ordenados pelo código do produto:
+                break;
+            case 4:
+                //Excluir um produto:
+                break;
+            case 5:
+                //Efetuar uma venda:
+                break;
+            case 6:
+                //Listar dados de produtos ativos em estoque:
+                break;
+            case 7:
+                //Exportar dados de produtos ativos para arquivo binário:
+                break;
+            case 8:
+                //Sair:
+                cout << "Saindo...";
+                break;
+            default:
+                break;
+        }
     }
 
     return 0;
