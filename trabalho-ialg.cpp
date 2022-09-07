@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstring>
 
 using namespace std;
 
@@ -98,7 +99,7 @@ struct Produto{
 
 void cadastrar(){
     Produto produto;
-    string entrada("");
+    string entrada;
     string str1 ("ativo");
     string str2 ("inativo");
 
@@ -107,11 +108,26 @@ void cadastrar(){
     // Parte do Produto
     cout << "CADASTRO DE PRODUTO" << endl;
     cout << "Descricao do produto: ";
-    cin.getline(produto.descricao,59);
+    cin.clear();
+	while(cin.get() != '\n'){
+        continue;
+    }
+    getline(std::cin, entrada);
+    strcpy(produto.descricao, entrada.c_str());
+    
+    
     cout << "Marca do produto: ";
-    cin.getline(produto.marca,19);
+    cin.clear();
+	
+    getline(std::cin, entrada);
+    strcpy(produto.marca, entrada.c_str());
+    
     cout << "Codigo de identificacao: ";
-    cin.getline(produto.id,19);
+    cin.clear();
+	
+    getline(std::cin, entrada);
+    strcpy(produto.id, entrada.c_str());
+
     cout << "Quantidade disponivel: ";
     cin >> produto.quantidade;
     cout << "Preco unitario: ";
@@ -119,7 +135,12 @@ void cadastrar(){
 
     // Parte do Fornecedor
     cout << "Nome do fornecedor: ";
-    cin.getline(produto.fornecedor.nome,59);
+    cin.clear();
+	while(cin.get() != '\n'){
+        continue;
+    }
+    getline(std::cin, entrada);
+    strcpy(produto.fornecedor.nome, entrada.c_str());
 
     cout << "Quantos e-mails o Fornecedor possui? "; //consertar
     int chave;
@@ -148,7 +169,7 @@ void cadastrar(){
             chave = 0;
         }
     }
-
+    
     arquivo.write((const char *)(&produto), sizeof(Produto));
     arquivo.close();
 }
