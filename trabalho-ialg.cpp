@@ -16,6 +16,7 @@ void saida(Produto produto);
 void cadastrar();
 void menu();
 void consultar();
+int tamanhoBancoDados();
 
 int main(){
 
@@ -84,7 +85,7 @@ void menu(){
 struct Fornecedor{
     char nome[60];
     int telefone;
-    string email[3];
+    //string email[3];
 };
 
 struct Produto{
@@ -142,7 +143,7 @@ void cadastrar(){
     getline(std::cin, entrada);
     strcpy(produto.fornecedor.nome, entrada.c_str());
 
-    cout << "Quantos e-mails o Fornecedor possui? "; //consertar
+    /*cout << "Quantos e-mails o Fornecedor possui? "; //consertar
     int chave;
     cin >> chave;
     int i = 0;
@@ -150,13 +151,14 @@ void cadastrar(){
         cout << "E-mail(" << i+1 << "): ";
         cin >> produto.fornecedor.email[i];
         i++;
-    }
+    }*/
 
     cout << "Telefone: ";
     cin >> produto.fornecedor.telefone;
     
 
     cout << "Situacao(ativo ou inativo):  " << endl;
+    int chave;
     chave = -1;
     while(chave == -1){
         cin >> entrada;
@@ -169,44 +171,60 @@ void cadastrar(){
             chave = 0;
         }
     }
-    
+
     arquivo.write((const char *)(&produto), sizeof(Produto));
     arquivo.close();
 }
 
 void consultar(){
     ifstream arquivo ("bancoDados.bin");
-    Produto produto;
-    arquivo.read((char *)(&produto), sizeof(Produto));
-    cout << "Descricao do produto: ";
-    cout << produto.descricao << endl;
-    cout << "Marca do produto: ";
-    cout << produto.marca << endl;
-    cout << "Codigo de identificacao: ";
-    cout << produto.id << endl;
-    cout << "Quantidade disponivel: ";
-    cout << produto.quantidade << endl;
-    cout << "Preco unitario: ";
-    cout << produto.preco << endl;
-    cout << "Fornecedor: " << endl;
-    cout << "Nome: ";
-    cout << produto.fornecedor.nome << endl;
+    int tamanho;
+    tamanho = tamanhoBancoDados();
+    Produto produto[tamanho];
+    arquivo.read((char *)(&produto), tamanho*sizeof(Produto));
+    for(int i=0; i<tamanho; i++){
+        cout << "Descricao do produto: ";
+        cout << produto[i].descricao << endl;
+        cout << "Marca do produto: ";
+        cout << produto[i].marca << endl;
+        cout << "Codigo de identificacao: ";
+        cout << produto[i].id << endl;
+        cout << "Quantidade disponivel: ";
+        cout << produto[i].quantidade << endl;
+        cout << "Preco unitario: ";
+        cout << produto[i].preco << endl;
+        cout << "Fornecedor: " << endl;
+        cout << "Nome: ";
+        cout << produto[i].fornecedor.nome << endl;
 
-    cout << "E-mail(s) do Fornecedor: "; //consertar
-    int i=0;
-    while(i < 3){
-        cout << produto.fornecedor.email[i] << endl;
-        i++;
+        /*cout << "E-mail(s) do Fornecedor: "; //consertar
+        int j=0;
+        while(j < 3){
+            cout << produto[i].fornecedor.email[j] << endl;
+            j++;
+        }*/
+
+        cout << "Telefone: ";
+        cout << produto[i].fornecedor.telefone << endl;
+        cout << "Situacao do produto: ";
+        if(produto[i].situacao == true){
+            cout << "Ativo" << "\n\n";
+        }
+        else{
+            cout << "Inativo" << "\n\n";
+        }
     }
 
-    cout << "Telefone: ";
-    cout << produto.fornecedor.telefone << endl;
-    cout << "Situacao do produto: ";
-    if(produto.situacao == true){
-        cout << "Ativo" << endl;
-    }
-    else{
-        cout << "Inativo" << endl;
-    }
     arquivo.close();
+}
+
+int tamanhoBancoDados(){
+    streamsize size;
+    ifstream arquivo ("bancoDados.bin");
+    arquivo.seekg(0, arquivo.end);
+    size = arquivo.tellg();
+    size = size/sizeof(Produto);
+    arquivo.close();
+
+    return size;
 }
