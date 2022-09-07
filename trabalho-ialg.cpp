@@ -1,15 +1,20 @@
 #include <iostream>
 #include <fstream>
-#include <string.h>
+#include <string>
 
 using namespace std;
+
+/*cadastro, alteração de dados, listagem de produtos disponíveis (por ordem alfabética
+A,B,C...Z), visualização de nome de produto, realizar a venda de um produto e
+exportação de produtos cadastrados com suas respectivas informações para um
+arquivo binário.*/
 
 struct Fornecedor;
 struct Produto;
 void saida(Produto produto);
 void cadastrar();
-void gravarEmArquivo(Produto produto);
 void menu();
+void consultar();
 
 int main(){
 
@@ -24,6 +29,7 @@ int main(){
                 break;
             case 2:
                 //Consultar produto:
+                consultar();
                 break;
             case 3:
                 //Listar produtos cadastrados disponíveis ordenados pelo código do produto:
@@ -62,31 +68,6 @@ email: bel@beltrano.com bSilva@eletri.com.br
 Telefone:+55 (35)38219997
 situação: ativo*/
 
-/*void saida(Produto produto){
-    cout << "Descricao do produto: ";
-    cout << produto.descricao << endl;
-    cout << "Codigo de identificacao: ";
-    cout << produto.id << endl;
-    cout << "Quantidade disponivel: ";
-    cout << produto.quantidade << endl;
-    cout << "Preco unitario: ";
-    cout << produto.preco << endl;
-    cout << "Fornecedor: " << endl;
-    cout << "Nome: ";
-    cout << produto.fornecedor.nome << endl;
-
-    cout << "E-mail(s) do Fornecedor: ";
-    int i=0;
-    while(i < 5){
-        cout << produto.fornecedor.email[i] << endl;
-        i++;
-    }
-
-    cout << "Telefone: ";
-    cout << produto.fornecedor.telefone << endl;
-    cout << "Situacao: ";
-    cout << produto.situacao << endl;
-}*/
 void menu(){
     cout << "\nEscolha o que deseja fazer:" << endl;
     cout << "(1) Cadastrar produto" << endl;
@@ -100,15 +81,15 @@ void menu(){
 }
  
 struct Fornecedor{
-    string nome;
-    string email[5];
-    string telefone;
+    char nome[60];
+    int telefone;
+    string email[3];
 };
 
 struct Produto{
-    string descricao;
-    string marca;
-    string id;
+    char descricao[60];
+    char marca[20];
+    char id[20];
     int quantidade;
     double preco;
     bool situacao;
@@ -116,25 +97,31 @@ struct Produto{
 };
 
 void cadastrar(){
-
     Produto produto;
     string entrada("");
     string str1 ("ativo");
     string str2 ("inativo");
 
+    ofstream arquivo ("bancoDados.bin", ios::app);
+
+    // Parte do Produto
     cout << "CADASTRO DE PRODUTO" << endl;
     cout << "Descricao do produto: ";
-    cin >> produto.descricao;
+    cin.getline(produto.descricao,59);
+    cout << "Marca do produto: ";
+    cin.getline(produto.marca,19);
     cout << "Codigo de identificacao: ";
-    cin >> produto.id;
+    cin.getline(produto.id,19);
     cout << "Quantidade disponivel: ";
     cin >> produto.quantidade;
     cout << "Preco unitario: ";
     cin >> produto.preco;
-    cout  << "Nome do fornecedor: ";
-    cin >> produto.fornecedor.nome;
 
-    cout << "Quantos e-mails o Fornecedor possui?(Maximo 5): ";
+    // Parte do Fornecedor
+    cout << "Nome do fornecedor: ";
+    cin.getline(produto.fornecedor.nome,59);
+
+    cout << "Quantos e-mails o Fornecedor possui? "; //consertar
     int chave;
     cin >> chave;
     int i = 0;
@@ -146,6 +133,7 @@ void cadastrar(){
 
     cout << "Telefone: ";
     cin >> produto.fornecedor.telefone;
+    
 
     cout << "Situacao(ativo ou inativo):  " << endl;
     chave = -1;
@@ -161,10 +149,43 @@ void cadastrar(){
         }
     }
 
-    saida(produto);
-
+    arquivo.write((const char *)(&produto), sizeof(Produto));
+    arquivo.close();
 }
 
-void gravarEmArquivo(Produto produto){
-    //to do
+void consultar(){
+    ifstream arquivo ("bancoDados.bin");
+    Produto produto;
+    arquivo.read((char *)(&produto), sizeof(Produto));
+    cout << "Descricao do produto: ";
+    cout << produto.descricao << endl;
+    cout << "Marca do produto: ";
+    cout << produto.marca << endl;
+    cout << "Codigo de identificacao: ";
+    cout << produto.id << endl;
+    cout << "Quantidade disponivel: ";
+    cout << produto.quantidade << endl;
+    cout << "Preco unitario: ";
+    cout << produto.preco << endl;
+    cout << "Fornecedor: " << endl;
+    cout << "Nome: ";
+    cout << produto.fornecedor.nome << endl;
+
+    cout << "E-mail(s) do Fornecedor: "; //consertar
+    int i=0;
+    while(i < 3){
+        cout << produto.fornecedor.email[i] << endl;
+        i++;
+    }
+
+    cout << "Telefone: ";
+    cout << produto.fornecedor.telefone << endl;
+    cout << "Situacao do produto: ";
+    if(produto.situacao == true){
+        cout << "Ativo" << endl;
+    }
+    else{
+        cout << "Inativo" << endl;
+    }
+    arquivo.close();
 }
