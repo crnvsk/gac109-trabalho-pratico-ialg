@@ -1,6 +1,6 @@
 # gac109-ialg-ufla
 
-Trabalho final da disciplina GAC109 - Introdução aos Algoritmos.
+Trabalho final da disciplina GAC109 - Introdução aos Algoritmos - UFLA - 2022/1
 
 
 
