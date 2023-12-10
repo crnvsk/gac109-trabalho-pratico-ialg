@@ -1,10 +1,10 @@
-## GAC109 - Introdução aos Algoritmos - Trabalho Prático 
+# GAC109 - Introdução aos Algoritmos - Trabalho Prático 
 
-# Descrição:
+## Descrição:
 
 Trabalho final da disciplina GAC109 - Introdução aos Algoritmos - UFLA - 2022/1
 
-# Discentes:
+## Discentes:
 
 João Pedro Alves Carneiro Valadão
 
